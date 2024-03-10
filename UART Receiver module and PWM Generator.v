@@ -1,4 +1,4 @@
-// This file contains the UART Receiver.  This receiver is able to
+// This file contains the UART Receiver and PWM Generator.  This receiver is able to
 // receive 8 bits of serial data, one start bit, one stop bit,
 // and no parity bit.  When receive is complete o_rx_dv will be
 // driven high for one clock cycle.
@@ -136,10 +136,10 @@ module UART_RX_PWM
   //Purpose: PWM Generation
   always @(posedge i_Clock)
     begin
-      if(pwm_counter<256) pwm_counter<=pwm_counter+1; //generate a counter which counts upto                                           256 as we are receiving 8 bits of data
+     if(pwm_counter<256) pwm_counter<=pwm_counter+1; //generate a counter which counts upto 256 as we are receiving 8 bits of data
       else pwm_counter<=0;
     end
-   //compare the counter value with data received in UART to generate pwm of      that duty cycle
+   //compare the counter value with data received in UART to generate pwm of that duty cycle
   assign o_pwm= (pwm_counter<o_RX_Data)? 1:0;
   
   
